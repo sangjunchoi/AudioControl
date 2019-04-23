@@ -1,0 +1,199 @@
+﻿<Window x:Class="AudioControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:calcbinding="clr-namespace:CalcBinding;assembly=CalcBinding"
+        xmlns:local="clr-namespace:AudioControl"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="AudioControl" Height="620" Width="942.4" WindowStartupLocation="CenterScreen">
+    <Canvas Margin="0,0,139.6,0.4">
+        <TabControl x:Name="tc_page" HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="935" Canvas.Top="19">
+            <TabItem Header="Chime">
+                <Canvas Background="#FFE5E5E5" Margin="0,1,-2.2,-0.8" RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleY="0.441"/>
+                            <RotateTransform/>
+                            <TranslateTransform Y="3.592"/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <GroupBox Header="Chime/PDC" Style="{DynamicResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0" Canvas.Left="2" Canvas.Top="2" Width="931">
+                        <Canvas>
+                            <GroupBox Header="Pre-defined Chimes" Width="450" Height="120">
+
+                                <UniformGrid Columns="2">
+                                    <RadioButton Height="20" Style="{StaticResource MaterialDesignRadioButton}" IsChecked="True">None (De-Active)</RadioButton>
+                                    <RadioButton Height="20" Style="{StaticResource MaterialDesignRadioButton}">Cruise control</RadioButton>
+                                    <RadioButton Height="20" Style="{StaticResource MaterialDesignRadioButton}">Fasten Seatbelt</RadioButton>
+                                    <RadioButton Height="20" Style="{StaticResource MaterialDesignRadioButton}">Alert signal</RadioButton>
+                                    <RadioButton Height="20" Style="{StaticResource MaterialDesignRadioButton}">Key in Ignition (cont)</RadioButton>
+                                    <RadioButton Height="20" Style="{StaticResource MaterialDesignRadioButton}">Confirmation</RadioButton>
+                                </UniformGrid>
+                            </GroupBox>
+                            <!--Thresholds-->
+                            <GroupBox Header="Thresholds" Width="450" Height="100" Canvas.Top="125">
+                                <UniformGrid Columns="1">
+                                    <Canvas>
+                                        <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}">Chime Change thr [-66..0dB]</TextBlock>
+                                        <Slider x:Name="sl_chime_change_thr" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="-660" Maximum="0" Value="-654" SmallChange="1" LargeChange="10" />
+                                        <TextBlock Text="{calcbinding:Binding ElementName=sl_chime_change_thr, Path=Value/10, StringFormat='[{0:n1}]'}" Canvas.Left="380" Style="{StaticResource MaterialDesignBody1TextBlock}"></TextBlock>
+                                    </Canvas>
+                                    <Canvas>
+                                        <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}">Chime Decay thr [0.1..9999 ms]</TextBlock>
+                                        <Slider x:Name="sl_chime_decay_thr" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="1" Maximum="30000" Value="0" />
+                                        <TextBlock  Text="{calcbinding:Binding ElementName=sl_chime_decay_thr, Path=Value/10, StringFormat='[{0:n1}]'}" Canvas.Left="380" Style="{StaticResource MaterialDesignBody1TextBlock}"></TextBlock>
+                                    </Canvas>
+                                </UniformGrid>
+                            </GroupBox>
+                            <GroupBox Header="Effects generator" Width="450" Height="207" Canvas.Top="230">
+                                <ItemsControl>
+                                    <GroupBox Height="60" materialDesign:ColorZoneAssist.Mode="Accent"  >
+                                        <GroupBox.Header>
+                                            <TextBlock Text="Tone effect" Margin="-3,-9,0,-10" Foreground="Black"></TextBlock>
+                                        </GroupBox.Header>
+                                        <UniformGrid Columns="2" >
+                                            <RadioButton Height="20" Style="{StaticResource MaterialDesignRadioButton}" IsChecked="True">Add</RadioButton>
+                                            <RadioButton Height="20" Style="{StaticResource MaterialDesignRadioButton}">Multiply</RadioButton>
+                                        </UniformGrid>
+                                    </GroupBox>
+                                    <ItemsControl>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Org Signal L/R [-66..0 dB]"/></TextBlock>
+                                            <Slider x:Name="sl_org_signal" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="-660" Maximum="0" Value="-660" SmallChange="1" LargeChange="10" />
+                                            <TextBlock Text="{calcbinding:Binding ElementName=sl_org_signal, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                        </Canvas>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Left inp Signal [-66..0 dB]"/></TextBlock>
+                                            <Slider x:Name="sl_left_inp_signal" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="-660" Maximum="0" Value="-660" />
+                                            <TextBlock  Text="{calcbinding:Binding ElementName=sl_left_inp_signal, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                        </Canvas>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Right inp Signal [-66..0 dB]"/></TextBlock>
+                                            <Slider x:Name="sl_right_inp_signal" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="-660" Maximum="0" Value="-660" />
+                                            <TextBlock  Text="{calcbinding:Binding ElementName=sl_right_inp_signal, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                        </Canvas>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Additional Clip Boost"/></TextBlock>
+                                            <CheckBox Canvas.Left="228"></CheckBox>
+                                        </Canvas>
+                                    </ItemsControl>
+                                </ItemsControl>
+                            </GroupBox>
+                        </Canvas>
+                    </GroupBox>
+                    <GroupBox Header="Chime User settings" Height="488" Canvas.Left="464" Canvas.Top="45" Width="457">
+                        <Canvas>
+                            <TabControl x:Name="tc_slot" Height="134" Width="438" Canvas.Top="35">
+                                <TabItem>
+                                    <ItemsControl>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Frequency [40..3000 Hz]"/></TextBlock>
+                                            <Slider x:Name="sl_slot1_frequency" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="400" Maximum="30000" Value="400" SmallChange="1" LargeChange="10" />
+                                            <TextBlock Text="{calcbinding:Binding ElementName=sl_slot1_frequency, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                        </Canvas>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Attn [-200..0 dB]"/></TextBlock>
+                                            <Slider x:Name="sl_slot1_attn" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="-2000" Maximum="0" Value="-2000" />
+                                            <TextBlock  Text="{calcbinding:Binding ElementName=sl_slot1_attn, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                        </Canvas>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="ClipBoost [0..24 dB]"/></TextBlock>
+                                            <Slider x:Name="sl_slot1_clip_boost" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="0" Maximum="240" Value="0" />
+                                            <TextBlock  Text="{calcbinding:Binding ElementName=sl_slot1_clip_boost, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                        </Canvas>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Sequencer [0..9999 msec]"/></TextBlock>
+                                            <Slider x:Name="sl_slot1_sequencer" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="0" Maximum="99990" Value="0" />
+                                            <TextBlock  Text="{calcbinding:Binding ElementName=sl_slot1_sequencer, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                        </Canvas>
+                                        <Canvas Height="20" Margin="0,5,0,0">
+                                            
+                                            <CheckBox>Triangualr wave form</CheckBox>
+                                        </Canvas>
+                                    </ItemsControl>
+                                </TabItem>
+                                <TabItem></TabItem>
+                                <TabItem></TabItem>
+                                <TabItem></TabItem>
+                            </TabControl>
+                            <materialDesign:ColorZone Mode="Accent">
+                                <StackPanel Orientation="Horizontal" Margin="2" Width="434">
+                                    <RadioButton x:Name="rb_slot1" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True" Content="Slot1" Checked="RadioButton_Checked" />
+                                    <RadioButton x:Name="rb_slot2" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Slot2" Checked="RadioButton_Checked"/>
+                                    <RadioButton x:Name="rb_slot3" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Slot3" Checked="RadioButton_Checked"/>
+                                    <RadioButton x:Name="rb_slot4" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Slot4" Checked="RadioButton_Checked"/>
+                                </StackPanel>
+                            </materialDesign:ColorZone>
+                            
+                            <UniformGrid  Columns="1" Canvas.Top="170" Width="438" Height="267">
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Master Volume [-66..0 dB]"/></TextBlock>
+                                    <Slider x:Name="sl_master_volume"  Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="-660" Maximum="0" Value="-660" />
+                                    <TextBlock  Text="{calcbinding:Binding ElementName=sl_master_volume, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                </Canvas>
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="CrossFader [0.1..9999 msec]"/></TextBlock>
+                                    <Slider x:Name="sl_crossfader"  Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="1" Maximum="99990" Value="0" />
+                                    <TextBlock  Text="{calcbinding:Binding ElementName=sl_crossfader, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                </Canvas>
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Attack [0.1..9999 msec]"/></TextBlock>
+                                    <Slider x:Name="sl_attack" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="1" Maximum="99990" Value="0" />
+                                    <TextBlock  Text="{calcbinding:Binding ElementName=sl_attack, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                </Canvas>
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Release [0.1..9999 msec]"/></TextBlock>
+                                    <Slider x:Name="sl_release" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="1" Maximum="99990" Value="0" />
+                                    <TextBlock  Text="{calcbinding:Binding ElementName=sl_release, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                </Canvas>
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Sequencer TA [1..9999 msec]"/></TextBlock>
+                                    <Slider x:Name="sl_sequencer_ta" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="10" Maximum="99990" Value="0" />
+                                    <TextBlock  Text="{calcbinding:Binding ElementName=sl_sequencer_ta, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                </Canvas>
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Sequencer TB [1..9999 msec]"/></TextBlock>
+                                    <Slider x:Name="sl_sequencer_tb" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="10" Maximum="99990" Value="0" />
+                                    <TextBlock  Text="{calcbinding:Binding ElementName=sl_sequencer_tb, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                </Canvas>
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <TextBlock Width="220" Margin="0,0,10,0" Style="{StaticResource MaterialDesignBody1TextBlock}"><Run Text="Repetitions [0..4095 #]"/></TextBlock>
+                                    <Slider x:Name="sl_repetitions" Canvas.Left="230" Margin="0,0,10,0" Width="120" TickFrequency="5" Orientation="Horizontal" Minimum="0" Maximum="40950" Value="0" />
+                                    <TextBlock  Text="{calcbinding:Binding ElementName=sl_repetitions, Path=Value/10, StringFormat=[\{0:n1\}]}" Canvas.Left="380"><Hyperlink Style="{StaticResource MaterialDesignBody2Hyperlink}"/></TextBlock>
+                                </Canvas>
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <CheckBox> Duation Fixed</CheckBox>
+                                    <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="100" ToolTip="Resource name: MaterialDesignRaisedAccentButton" Canvas.Left="328" Height="17" FontSize="9">Activate User</Button>
+                                </Canvas>
+                                <Canvas Height="20" Margin="0,5,0,0">
+                                    <CheckBox IsEnabled="False">Release Time Linear</CheckBox>
+                                    <Button Style="{StaticResource MaterialDesignRaisedAccentButton}" Width="100" ToolTip="Resource name: MaterialDesignRaisedAccentButton" Canvas.Left="328" Height="17" FontSize="9">De-Activate</Button>
+                                </Canvas>
+                            </UniformGrid>
+                        </Canvas>
+                    </GroupBox>
+                    <Label Content="Note : See the superposition tab to add the chime" Canvas.Left="10" Canvas.Top="496.265" Width="449"/>
+                </Canvas>
+            </TabItem>
+            <TabItem Header="Opt Features">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+        <materialDesign:ColorZone Mode="PrimaryMid">
+            <StackPanel Orientation="Horizontal" Margin="2" Width="931">
+                <RadioButton x:Name="rb_chime" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True" Content="Chime" Checked="RadioButton_Checked" />
+                <RadioButton x:Name="rb_Opt_Features" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" Content="Opt Features" Checked="RadioButton_Checked" />
+            </StackPanel>
+        </materialDesign:ColorZone>
+    </Canvas>
+</Window>

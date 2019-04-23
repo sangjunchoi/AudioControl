@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>DynamicExpresso.Core</id>
+    <version>2.3.1</version>
+    <authors>Davide Icardi</authors>
+    <owners>Davide Icardi</owners>
+    <licenseUrl>https://github.com/davideicardi/DynamicExpresso#license</licenseUrl>
+    <projectUrl>https://github.com/davideicardi/DynamicExpresso</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C# expression interpreter/evaluator</description>
+    <copyright>Davide Icardi</copyright>
+    <tags>dynamic expresso expression linq eval</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework=".NETFramework4.6.1" />
+      <group targetFramework="Unsupported0.0" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework=".NETFramework4.5, .NETFramework4.6.1" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
